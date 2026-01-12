@@ -1,4 +1,4 @@
-# cjs
+# cjs [![Go Reference](https://pkg.go.dev/badge/github.com/matthewmueller/cjs.svg)](https://pkg.go.dev/github.com/matthewmueller/cjs)
 
 Functions for turning CommonJS code into ES6 modules.
 
