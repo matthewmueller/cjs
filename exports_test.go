@@ -8,11 +8,6 @@ import (
 	"github.com/matthewmueller/cjs"
 )
 
-//go:generate go tool esbuild --bundle --platform=browser --format=esm --outfile=testdata/react.js react
-//go:generate go tool esbuild --bundle --platform=browser --format=esm --outfile=testdata/react-dom-client.js react-dom/client --external:react --external:scheduler --external:react-dom
-//go:generate go tool esbuild --bundle --platform=browser --format=esm --outfile=testdata/react-dom-server.js react-dom/server --external:react --external:scheduler --external:react-dom
-//go:generate go tool esbuild --bundle --platform=browser --format=esm --outfile=testdata/d3.js d3
-
 func exportsEqual(t testing.TB, actual, expect []string) {
 	is := is.New(t)
 	sort.Strings(actual)

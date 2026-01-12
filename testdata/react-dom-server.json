@@ -1,9 +1,23 @@
 [
+  "__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE",
+  "createPortal",
+  "default",
+  "flushSync",
+  "preconnect",
+  "prefetchDNS",
+  "preinit",
+  "preinitModule",
+  "preload",
+  "preloadModule",
   "prerender",
   "renderToReadableStream",
   "renderToStaticMarkup",
   "renderToString",
+  "requestFormReset",
   "resume",
   "resumeAndPrerender",
+  "unstable_batchedUpdates",
+  "useFormState",
+  "useFormStatus",
   "version"
 ]

@@ -9,7 +9,13 @@ import (
 
 	"github.com/matryer/is"
 	"github.com/matthewmueller/cjs"
+	"github.com/matthewmueller/diff"
 )
+
+//go:generate go tool esbuild --bundle --platform=browser --format=esm --outfile=testdata/react.js react
+//go:generate go tool esbuild --bundle --platform=browser --format=esm --outfile=testdata/react-dom-client.js react-dom/client --alias:react=/node_modules/react --external:/node_modules/react --alias:scheduler=/node_modules/scheduler --external:/node_modules/scheduler
+//go:generate go tool esbuild --bundle --platform=browser --format=esm --outfile=testdata/react-dom-server.js react-dom/server --alias:react=/node_modules/react --external:/node_modules/react --alias:scheduler=/node_modules/scheduler --external:/node_modules/scheduler
+//go:generate go tool esbuild --bundle --platform=browser --format=esm --outfile=testdata/d3.js d3
 
 var update = flag.Bool("update", false, "update testdata files")
 
@@ -54,6 +60,18 @@ func TestData(t *testing.T) {
 		is.NoErr(json.Unmarshal(expectBytes, &expectExports))
 		is.Equal(actualExports, expectExports)
 
-		// Hoist requires
+		// Rewrite requires
+		expectPath = filepath.Join("testdata", replaceExt(de.Name(), ".mjs"))
+		actualRewrite, err := cjs.RewriteRequires(inputPath, "/node_modules/", string(inputBytes))
+		is.NoErr(err)
+
+		if *update {
+			err = os.WriteFile(expectPath, []byte(actualRewrite), 0644)
+			is.NoErr(err)
+		}
+
+		expectBytes, err = os.ReadFile(expectPath)
+		is.NoErr(err)
+		diff.TestString(t, actualRewrite, string(expectBytes))
 	}
 }
