@@ -1,0 +1,9 @@
+{
+  "name": "cjs",
+  "private": true,
+  "devDependencies": {
+    "d3": "7.9.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  }
+}
