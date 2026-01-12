@@ -38,7 +38,7 @@ This isn't compatible with browser imports, so we perform the following steps:
 
 2. Use `cjs.ParseExports` to parse out all the CommonJS exports (e.g. `Children`, `version`, etc.)
 
-   This is heavily influenced by the work done by [@guybedford] on [cjs-module-lexer](https://github.com/nodejs/cjs-module-lexer).
+   This is heavily influenced by the work done in [cjs-module-lexer](https://github.com/nodejs/cjs-module-lexer) by [@guybedford](https://github.com/guybedford).
 
 3. Create a virtual ES6 module entrypoint and rebuild with ESBuild, something like:
 
@@ -52,9 +52,9 @@ This isn't compatible with browser imports, so we perform the following steps:
 
    React throws errors if it's imported twice on the page and if you bundle `react` and `react-dom/client` on the same page, you'll end up with two Reacts.
 
-   So to avoid this, we externalize node modules. So for example, in `react-dom/client`, we'll merge all the local sour ce files, but when we see `require('react')`, we transform that into `require('/node_modules/react')` so it reuses the previously imported React.
+   So to avoid this, we externalize node modules. So for example, in `react-dom/client`, we'll merge all the local source files, but when we see `require('react')`, we transform that into `require('/node_modules/react')` so it reuses the previously imported React.
 
-   The challenge is that we're back using CommonJS. So to fix this we'll detect all these `/node_modules/react`, add ES imports to the top of the source, and rewrite the requires to use our own require:
+   The challenge is that we're back to CommonJS. So to fix this we'll detect all these `/node_modules/react`, add ES imports to the top of the source, and rewrite the requires to use our own require:
 
    ```js
    import __cjs_import_scheduler__ from "/node_modules/scheduler"
@@ -84,8 +84,8 @@ go get github.com/matthewmueller/cjs
 
 Big thanks to
 
-- [@ije](https://github.com/ije) of [esm.sh](https://esm.sh) fame for figuring this out.
-- [@guybedford](https://github.com/guybedford) for creating [cjs-module-lexer](https://github.com/nodejs/cjs-module-lexer).
+- [@ije](https://github.com/ije) of [esm.sh](https://esm.sh) fame for figuring this all out
+- [@guybedford](https://github.com/guybedford) for creating [cjs-module-lexer](https://github.com/nodejs/cjs-module-lexer)
 - [@evanw](https://github.com/evanw) for creating and maintaining [ESBuild](https://github.com/evanw/esbuild)
 
 ## License
